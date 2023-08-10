@@ -20,7 +20,7 @@ export default function Signin() {
 
   useEffect(() => {
     if (token) {
-      navigate("/todos");
+      navigate("/todo");
     }
   });
 
@@ -53,7 +53,7 @@ export default function Signin() {
     }).then((response) => {
       localStorage.setItem("access-token", response.data);
       console.log(response.data);
-      navigate("/todos");
+      navigate("/todo");
     });
   };
 

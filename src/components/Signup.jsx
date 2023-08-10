@@ -20,7 +20,7 @@ export default function Signup() {
 
   useEffect(() => {
     if (token) {
-      navigate("/todos");
+      navigate("/todo");
     }
   });
 

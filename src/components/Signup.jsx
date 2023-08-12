@@ -16,13 +16,13 @@ export default function Signup() {
 
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("access-token");
+  const token = localStorage.getItem("access_token");
 
   useEffect(() => {
     if (token) {
       navigate("/todo");
     }
-  });
+  }, []);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);

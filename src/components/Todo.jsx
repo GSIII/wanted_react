@@ -2,42 +2,41 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 export default function Todo() {
-  const [todoList, setTodoList] = useState([]);
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState("");
 
   const addTodoList = (e) => {
-    setTodoList(e.target.valuse);
+    setNewTodo(e.target.value);
   };
+  useEffect(() => {
+    axios({
+      url: "https://www.pre-onboarding-selection-task.shop/todos",
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        setTodos(res.data);
+      }
+    });
+  }, [todos]);
 
-  //   useEffect(() => {
-  //     axios({
-  //       url: "https://www.pre-onboarding-selection-task.shop/todos",
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-  //       },
-  //     }).then(
-  //       (res) => {
-  //         if (res.status === 200) {
-  //           setTodoList(res.data);
-  //         }
-  //       },
-  //       [todoList]
-  //     );
-  //   });
-  const addTodo = (newTodo) => {
+  const addTodo = () => {
     axios({
       url: "https://www.pre-onboarding-selection-task.shop/todos",
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        "Content-Type": "application/json",
       },
-      data: {
-        todoList: newTodo,
-      },
+      data: JSON.stringify({
+        todo: newTodo,
+      }),
     })
       .then((res) => {
-        setTodoList((prevTodo) => [...prevTodo, res.data]);
+        console.log(res.data);
+        setTodos([...todos, res.data]);
       })
       .catch((err) => {
         console.log(err);
@@ -45,11 +44,22 @@ export default function Todo() {
   };
   return (
     <div>
-      <input data-testid="new-todo-input" onChange={addTodoList} />
-      <button data-testid="new-todo-add-button" onClick={() => addTodo()}>
+      <input
+        data-testid="new-todo-input"
+        value={newTodo}
+        onChange={addTodoList}
+      />
+      <button data-testid="new-todo-add-button" onClick={addTodo}>
         추가
       </button>
-      <li>
+      <ul>
+        {todos.map((todo, index) => (
+          <ul>
+            <li key={todo.index}>{todo.todo}</li>
+          </ul>
+        ))}
+      </ul>
+      {/* <li>
         <label>
           <input type="checkbox" />
           <span>TODO 1</span>
@@ -62,8 +72,7 @@ export default function Todo() {
           <input type="checkbox" />
           <span>TODO 2</span>
         </label>
-      </li>
-      <li>{todoList}</li>
+      </li> */}
     </div>
   );
 }

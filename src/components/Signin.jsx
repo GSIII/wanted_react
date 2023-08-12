@@ -16,13 +16,13 @@ export default function Signin() {
 
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("access-token");
+  const token = localStorage.getItem("access_token");
 
   useEffect(() => {
     if (token) {
       navigate("/todo");
     }
-  });
+  }, []);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -51,7 +51,7 @@ export default function Signin() {
         password: password,
       }),
     }).then((response) => {
-      localStorage.setItem("access-token", response.data);
+      localStorage.setItem("access_token", response.data.access_token);
       console.log(response.data);
       navigate("/todo");
     });

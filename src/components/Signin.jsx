@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/Signup.css";
+import "../styles/Form.css";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -50,26 +50,32 @@ export default function Signin() {
         email: email,
         password: password,
       }),
-    }).then((response) => {
-      localStorage.setItem("access_token", response.data.access_token);
-      console.log(response.data);
-      navigate("/todo");
-    });
+    })
+      .then((response) => {
+        localStorage.setItem("access_token", response.data.access_token);
+        console.log(response.data);
+        navigate("/todo");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
-    <div className="container">
-      <h2>로그인</h2>
-      이메일
+    <div className="form-container">
+      <h1>로그인</h1>
+
       <input
         data-testid="email-input"
+        className="e-input"
         placeholder="이메일을 입력하세요"
         onChange={handleEmail}
       />
       <p>{emailMsg}</p>
-      비밀번호
+
       <input
         data-testid="password-input"
+        className="pwd-input"
         placeholder="비밀번호를 입력하세요"
         type={"password"}
         onChange={handlePwd}

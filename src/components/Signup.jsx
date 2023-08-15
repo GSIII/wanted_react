@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/Signup.css";
+import "../styles/Form.css";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -50,29 +50,35 @@ export default function Signup() {
         email: email,
         password: password,
       }),
-    }).then((response) => {
-      if (response.status === 201) {
-        console.log("succcess");
-        navigate("/signin");
-      } else {
-        console.log(response.data);
-      }
-    });
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          console.log("succcess");
+          navigate("/signin");
+        } else {
+          console.log(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
-    <div className="container">
-      <h2>회원가입</h2>
-      이메일
+    <div className="form-container">
+      <h1>회원가입</h1>
+
       <input
         data-testid="email-input"
+        className="e-input"
         placeholder="이메일을 입력하세요"
         onChange={handleEmail}
       />
       <p>{emailMsg}</p>
-      비밀번호
+
       <input
         data-testid="password-input"
+        className="pwd-input"
         placeholder="비밀번호를 입력하세요"
         type={"password"}
         onChange={handlePwd}

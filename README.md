@@ -7,3 +7,4 @@
     npm start
  ## 데모 영상
  
+![원티드-프리온보딩-데모영상](https://github.com/GSIII/wanted-pre-onboarding-frontend/assets/103163277/db533c25-9620-480c-85eb-160bbbd84dde)

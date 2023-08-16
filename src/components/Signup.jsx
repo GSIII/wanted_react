@@ -60,7 +60,12 @@ export default function Signup() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.data.message === "동일한 이메일이 이미 존재합니다.") {
+          console.log(err);
+          alert("이미 존재하는 이메일 입니다");
+        } else {
+          console.log(err);
+        }
       });
   };
 

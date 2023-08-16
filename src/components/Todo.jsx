@@ -58,6 +58,7 @@ export default function Todo() {
         <input
           className="todo-input"
           data-testid="new-todo-input"
+          placeholder="할 일 목록을 입력하세요"
           value={newTodo}
           onChange={addTodoList}
         />

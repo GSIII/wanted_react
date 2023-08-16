@@ -57,7 +57,12 @@ export default function Signin() {
         navigate("/todo");
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          console.log(err);
+          alert("이메일이나 비밀번호가 일치하지 않습니다");
+        } else {
+          console.log(err);
+        }
       });
   };
 

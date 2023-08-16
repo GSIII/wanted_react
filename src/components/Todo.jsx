@@ -2,10 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import TodoItem from "./TodoItem";
 import "../styles/Todo.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Todo() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+
+  const navigate = useNavigate();
 
   const handleTodoItem = (editTodo) => {
     const updateTodo = todos.map((todo) =>
@@ -18,17 +21,22 @@ export default function Todo() {
     setNewTodo(e.target.value);
   };
   useEffect(() => {
-    axios({
-      url: "https://www.pre-onboarding-selection-task.shop/todos",
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    }).then((res) => {
-      if (res.status === 200) {
-        setTodos(res.data);
-      }
-    });
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      navigate("/signin");
+    } else {
+      axios({
+        url: "https://www.pre-onboarding-selection-task.shop/todos",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }).then((res) => {
+        if (res.status === 200) {
+          setTodos(res.data);
+        }
+      });
+    }
   }, [todos]);
 
   const addTodo = () => {
